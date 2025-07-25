@@ -1,0 +1,238 @@
+name: $(Build.BuildId)
+
+trigger:
+- cloud/cloud-main
+parameters:
+  - name: environment
+    default: cloudqa
+    values:
+      - clouddev
+      - clouddev2
+      - clouddev3
+      - clouddev4
+      - cloudqa
+      - cloudqa3
+      - cloudqa4
+      - clouduat
+      - clouduat2
+      - clouduat3
+      - cloudspt
+      - cloudextrn
+      - cloudprod
+
+  - name: BuildAndDeploy
+    default: CIAndCD
+    values:
+      - CIOnly
+      - CDOnly
+      - CIAndCD
+
+variables:
+  ${{ if eq( parameters.environment , 'clouddev') }}:
+
+    BatchArtifactName: EOISSSMBatch-dev-1.0.0.jar
+    appName: 'dev-eois-batch'
+    deploymentName: 'clouddev'
+    azureSubscriptionServiceConnection: 'ETD.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'clouddev2') }}:
+
+    BatchArtifactName: EOISSSMBatch-dev2-1.0.0.jar
+    appName: 'dev2-eois-batch'
+    deploymentName: 'clouddev2'
+    azureSubscriptionServiceConnection: 'ETD.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'clouddev3') }}:
+
+    BatchArtifactName: EOISSSMBatch-dev3-1.0.0.jar
+    appName: 'dev3-eois-batch'
+    deploymentName: 'clouddev3'
+    azureSubscriptionServiceConnection: 'ETD.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'clouddev4') }}:
+
+    BatchArtifactName: EOISSSMBatch-dev4-1.0.0.jar
+    appName: 'dev4-eoisssmbatch'
+    deploymentName: 'clouddev4'
+    azureSubscriptionServiceConnection: 'ETD.DEV4.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'cloudqa') }}:
+
+    BatchArtifactName: EOISSSMBatch-1.0.0-qa.jar
+    appName: 'qa-eois-batch'
+    deploymentName: 'cloudqa'
+    azureSubscriptionServiceConnection: 'ETD.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'cloudqa3') }}:
+
+    BatchArtifactName: EOISSSMBatch-1.0.0-qa3.jar
+    appName: 'qa3-eoisssmbatch'
+    deploymentName: 'cloudqa3'
+    azureSubscriptionServiceConnection: 'ETD.QA3.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'cloudqa4') }}:
+
+    BatchArtifactName: EOISSSMBatch-1.0.0-qa4.jar
+    appName: 'qa4-eoisssmbatch'
+    deploymentName: 'cloudqa4'
+    azureSubscriptionServiceConnection: 'ETD.QA4.EOISBATCH.OPSLTCEOISDEV01.SPRINGAPPS'
+    azureSpringCloud: 'qa-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'clouduat') }}:
+
+    BatchArtifactName: EOISSSMBatch-1.0.0-uat.jar
+    appName: 'uat-eois-batch'
+    deploymentName: 'clouduat'
+    azureSubscriptionServiceConnection: 'ETD.UAT.EOISBATCH.OPSLTCEOISUAT01.SPRINGAPPS'
+    azureSpringCloud: 'uat-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'clouduat2') }}:
+
+    BatchArtifactName: EOISSSMBatch-uat2-1.0.0.jar
+    appName: 'uat2-eois-batch'
+    deploymentName: 'clouduat2'
+    azureSubscriptionServiceConnection: 'ETD.UAT2.EOISBATCH.OPSLTCEOISUAT01.SPRINGAPPS'
+    azureSpringCloud: 'uat-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'clouduat3') }}:
+
+    BatchArtifactName: EOISSSMBatch-uat3-1.0.0.jar
+    appName: 'uat3-eois-batch'
+    deploymentName: 'clouduat3'
+    azureSubscriptionServiceConnection: 'ETD.UAT3.EOISBATCH.OPSLTCEOISUAT01.SPRINGAPPS'
+    azureSpringCloud: 'uat-etd-springappsstd-shared'
+
+
+  ${{ if eq( parameters.environment , 'cloudspt') }}:
+
+    BatchArtifactName: EOISSSMBatch-spt-1.0.0.jar
+    appName: 'spt-eois-batch'
+    deploymentName: 'cloudspt'
+    azureSubscriptionServiceConnection: 'ETD.SPT.EOISBATCH.OPSLTCEOISUAT01.SPRINGAPPS'
+    azureSpringCloud: 'uat-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'cloudextrn') }}:
+
+    BatchArtifactName: EOISSSMBatch-extrn-1.0.0.jar
+    appName: 'extrn-eois-batch'
+    deploymentName: 'cloudextrn'
+    azureSubscriptionServiceConnection: 'ETD.EXTRN.EOISBATCH.OPSLTCEOISUAT01.SPRINGAPPS'
+    azureSpringCloud: 'uat-etd-springappsstd-shared'
+
+  ${{ if eq( parameters.environment , 'cloudprod') }}:
+
+    BatchArtifactName: EOISSSMBatch-prod-1.0.0.jar
+    appName: 'eois-batch'
+    deploymentName: 'proddeployment'
+    azureSubscriptionServiceConnection: 'ETD.EOISBATCH.OPSLTCEOISPROD01.SPRINGAPPS'
+    azureSpringCloud: 'etd-springapps-shared'
+
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: EOISSSMBatch
+  displayName: EOISSSMBatch ${{ parameters.environment }} build
+  condition: or(eq( '${{ parameters.BuildAndDeploy }}', 'CIOnly'), eq( '${{ parameters.BuildAndDeploy }}', 'CIAndCD'))
+  jobs: 
+  - job: CI_build
+    steps:
+
+      - task: Maven@3
+        displayName: '${{ parameters.environment }} - Build EOISSSMBatch Jar'
+        inputs:
+          jdkVersionOption: '1.8'
+          jdkArchitectureOption: 'x64'
+          publishJUnitResults: false
+          mavenPomFile: 'pom.xml'
+          goals: 'clean package'
+          options: '-DskipTests -DoutputDirectory=$(Build.BinariesDirectory) -Dbuild-env=${{ parameters.environment }} -Dhttps.protocols=TLSv1.2 -Dbuild-version=1.0.0'
+
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: 'target'
+          Contents: '*.jar'
+          TargetFolder: '$(System.DefaultWorkingDirectory)/Publish'
+          OverWrite: true
+        displayName: '${{ parameters.environment }} - Copy EOISSSMBatch API jar to publish'
+
+      - publish: '$(System.DefaultWorkingDirectory)/Publish'
+        artifact: 'EOISSSMBatch.CIBuild'
+        displayName: 'Publish Artifact'
+
+
+- stage: Deploy
+  displayName: Deploy stage
+  condition: or(eq( '${{ parameters.BuildAndDeploy }}', 'CDOnly'), eq( '${{ parameters.BuildAndDeploy }}', 'CIAndCD'))
+  jobs:
+  - job: CD_Deploy
+    displayName: 'Deploy to Remote Server'
+
+    steps:
+       - checkout: none
+       - task: DownloadPipelineArtifact@2
+         inputs:
+           source: 'current'
+           project: 'ETD-Agile'
+           pipeline: 'EOISBatchService-CI-CD'
+           runVersion: 'latest'
+           itemPattern: 'EOISSSMBatch.CIBuild/EOISSSMBatch-${{ parameters.environment }}-*.jar'
+           targetPath: '$(Pipeline.Workspace)'
+
+       - bash: |
+                 ls -al
+         workingDirectory: '$(Pipeline.Workspace)'
+         name: ListingWorkspace1
+
+       - bash: |
+                 ls -al
+         workingDirectory: '$(Pipeline.Workspace)/EOISSSMBatch.CIBuild'
+         name: ListingWorkspace2
+
+       - bash: |
+            echo $(BatchArtifactName)
+            echo ${{ parameters.environment }}
+            FindJarFile=$( find . -type f  -name   "*-${{ parameters.environment }}-*.jar")
+            echo   $FindJarFile
+            BaseName=$(basename $FindJarFile)
+            echo "##vso[task.setvariable variable=BatchArtifactName;isOutput=true]$BaseName"
+            echo $BatchArtifactName
+           
+         workingDirectory: '$(Pipeline.Workspace)/EOISSSMBatch.CIBuild'
+         name: SettingJarFileName
+
+       - bash: |
+             echo "Deployment Artifact on ${{ parameters.environment }}  variable is $(SettingJarFileName.BatchArtifactName)"
+             echo $(azureSubscriptionServiceConnection)
+             echo $(appName)
+             echo $(deploymentName)
+             echo $(SettingJarFileName.BatchArtifactName)
+             echo ${{ parameters.environment }}
+             echo $(azureSpringCloud)
+
+       - bash: |
+                    ls -al
+         workingDirectory: '$(Pipeline.Workspace)/EOISSSMBatch.CIBuild'
+         name: ListingWorkspace3
+
+       - task: AzureSpringCloud@0
+         inputs:
+           azureSubscription: $(azureSubscriptionServiceConnection)
+           Action: 'Deploy'
+           AzureSpringCloud: $(azureSpringCloud)
+           AppName: $(appName)
+           UseStagingDeployment: false
+           CreateNewDeployment: true
+           DeploymentType: 'Artifacts'
+           Package: '$(Pipeline.Workspace)/EOISSSMBatch.CIBuild/$(SettingJarFileName.BatchArtifactName)'
+           DeploymentName: $(deploymentName)
+           EnvironmentVariables: '-SPRING_PROFILES_ACTIVE ${{ parameters.environment }}'
+           RuntimeVersion: 'Java_8'
+

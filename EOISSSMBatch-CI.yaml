@@ -1,0 +1,26 @@
+name: $(Build.BuildId)
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: EOISSSMBatch
+  displayName: EOISSSMBatch build
+  jobs: 
+  - job: CI_build
+    steps: 
+      - template: 'templates/mvnbuild.yaml'
+        parameters:
+          Application: ''
+          Name: 'EOISSSMBatch'
+          Type: 'Maven'
+          ArtifactsFeeds: ''
+          BuildArguments: ''
+          vmImage: ''
+          PersistCredentials: ''
+          Timeout: ''
+          PreSteps: ''
+          PostSteps: ''
